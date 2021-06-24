@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.7.3'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+group 'de.tobiasdollhofer'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.swing', 'javafx.web']
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version '2021.1'
+    updateSinceUntilBuild false
+    sameSinceUntilBuild false
+    plugins = ['android','com.intellij.java']
+    pluginName 'CodeCastFragebogen'
+
+    compileJava {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+test {
+    useJUnitPlatform()
+}

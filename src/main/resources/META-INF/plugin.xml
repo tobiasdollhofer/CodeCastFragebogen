@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>de.tobiasdollhofer.CodeCastFragebogen</id>
+    <name>CodeCast Fragebogen</name>
+    <vendor email="tobias.dollhofer@stud.uni-regensburg.de" url="https://www.uni-regensburg.de">University of Regensburg</vendor>
+
+    <description>Simple Webview Plugin for evaluating code comprehension</description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <!-- <depends>com.intellij.javafx</depends>-->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow factoryClass="WebviewFactory" id="CodeCastFragebogen" anchor="right" />
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
