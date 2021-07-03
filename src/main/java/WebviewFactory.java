@@ -10,6 +10,9 @@ public class WebviewFactory implements ToolWindowFactory {
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        UuidHelper uuidHelper = UuidHelper.getInstance();
+        System.out.println(uuidHelper.getUuid());
+        CsvLogger.log("Toolwindow Created");
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Viewer viewer = new Viewer();
         Content content = contentFactory.createContent(viewer.getContent(), "CodeCast Fragebogen", false);
