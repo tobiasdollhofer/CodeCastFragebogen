@@ -12,9 +12,14 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="WebviewFactory" id="CodeCastFragebogen" anchor="right" />
+        <projectService serviceImplementation="log.listeners.FileEventListener" />
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
     </actions>
+
+    <applicationListeners>
+        <listener class="util.ProjectOpenCloseListener" topic="com.intellij.openapi.project.ProjectManagerListener" />
+    </applicationListeners>
 </idea-plugin>

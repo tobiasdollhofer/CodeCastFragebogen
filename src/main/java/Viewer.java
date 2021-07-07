@@ -1,5 +1,6 @@
 
 import com.intellij.ui.jcef.JBCefBrowser;
+import log.CsvLogger;
 
 import javax.swing.*;
 

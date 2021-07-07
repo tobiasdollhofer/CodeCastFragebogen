@@ -1,10 +1,14 @@
+package log;
+
 import com.opencsv.CSVWriter;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPSClient;
+import uuid.UuidHelper;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class CsvLogger {
@@ -19,7 +23,7 @@ public class CsvLogger {
      * stores message with timestamp and uuid to csv
      * @param message
      */
-    public static void log(String message){
+    public static void log(Context context, EventType type, String message){
         try{
             File csv = new File(CSV_PATH);
 
@@ -28,7 +32,8 @@ public class CsvLogger {
             String date = getCurrentDate();
             String time = getCurrentTime();
             CSVWriter csvWriter = new CSVWriter(fileWriter);
-            String[] data = {date, time,message};
+            String[] data = {date, time, context.toString(), type.toString(),message};
+            System.out.println(Arrays.toString(data));
             csvWriter.writeNext(data);
             csvWriter.close();
         }catch(IOException e){

@@ -1,3 +1,5 @@
+package uuid;
+
 import java.io.*;
 import java.util.UUID;
 
@@ -31,7 +33,7 @@ public class UuidHelper {
 
     /**
      *
-     * @return UuidHelper instance
+     * @return uuid.UuidHelper instance
      */
     public static UuidHelper getInstance(){
         if(UuidHelper.instance == null){
