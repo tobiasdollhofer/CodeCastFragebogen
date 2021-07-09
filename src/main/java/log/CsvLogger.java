@@ -32,13 +32,17 @@ public class CsvLogger {
             File csv = new File(EDITOR_CSV_PATH);
 
             FileWriter fileWriter = new FileWriter(csv, true);
-
-            String uuid = UuidHelper.getInstance().getUuid().toString();
-            String sessionId = UuidHelper.getInstance().getSessionId().toString();
-            String date = getCurrentDate();
-            String time = getCurrentTime();
+            String[] data;
+            if(csv.exists()){
+                String uuid = UuidHelper.getInstance().getUuid().toString();
+                String sessionId = UuidHelper.getInstance().getSessionId().toString();
+                String date = getCurrentDate();
+                String time = getCurrentTime();
+                data = new String[]{uuid, sessionId, date, time, context.toString(), type.toString(), message};
+            }else{
+                data = new String[]{"uuid", "sessionId", "date", "time", "context", "eventtype", "message"};
+            }
             CSVWriter csvWriter = new CSVWriter(fileWriter);
-            String[] data = {uuid, sessionId, date, time, context.toString(), type.toString(),message};
             System.out.println(Arrays.toString(data));
             csvWriter.writeNext(data);
             csvWriter.close();
