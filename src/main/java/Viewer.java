@@ -2,6 +2,7 @@
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
 import log.CsvLogger;
+import uuid.UuidHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.net.URL;
 public class Viewer {
 
     private static String BROWSER_URL = "https://forms.gle/P8jMtnnQkfJSwcxM8";
+    private static String UUID_PREFILLED_URL = "https://docs.google.com/forms/d/e/1FAIpQLScMQo8qtIyEJlV3pQazn-TrXRdZkDKDxYKa0HzcNHKW8Oe4gg/viewform?usp=pp_url&entry.2064818074=" + UuidHelper.getInstance().getUuid();
 
     private JPanel windowContent;
     private JTextField headline;
@@ -23,7 +25,7 @@ public class Viewer {
 
     public Viewer() {
         if(JBCefApp.isSupported()){
-            browser = new JBCefBrowser(BROWSER_URL);
+            browser = new JBCefBrowser(UUID_PREFILLED_URL);
             submitButton.addActionListener((e) -> {
                 windowContent.remove(headline);
                 windowContent.remove(description);
@@ -37,7 +39,7 @@ public class Viewer {
         }else{
             submitButton.addActionListener((e) -> {
                 try{
-                    openWebpage(new URL(BROWSER_URL));
+                    openWebpage(new URL(UUID_PREFILLED_URL));
                     CsvLogger.sendToServer();
                 }catch (MalformedURLException ex){
                     ex.printStackTrace();

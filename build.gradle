@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.tobiasdollhofer'
-version '0.1'
+version '0.2'
 
 repositories {
     mavenCentral()
@@ -37,8 +37,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      Improved Logging and added link for prefilled form"""
 }
 test {
     useJUnitPlatform()
