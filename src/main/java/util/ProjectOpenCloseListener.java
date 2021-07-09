@@ -13,6 +13,7 @@ import log.listeners.FileEventListener;
 import log.listeners.MyCaretListener;
 import log.listeners.MySelectionListener;
 import org.jetbrains.annotations.NotNull;
+import uuid.UuidHelper;
 
 /**
  * partly from: https://github.com/JetBrains/intellij-sdk-code-samples/blob/main/max_opened_projects/src/main/java/org/intellij/sdk/maxOpenProjects/ProjectOpenCloseListener.java
@@ -35,6 +36,7 @@ public class ProjectOpenCloseListener implements ProjectManagerListener {
         FileEventListener listener = new FileEventListener(project);
         EditorFactory.getInstance().getEventMulticaster().addCaretListener(new MyCaretListener(), ApplicationManager.getApplication());
         EditorFactory.getInstance().getEventMulticaster().addSelectionListener(new MySelectionListener(), ApplicationManager.getApplication());
+        CsvLogger.logStartup();
     }
 
     /**
@@ -49,6 +51,7 @@ public class ProjectOpenCloseListener implements ProjectManagerListener {
         if(ApplicationManager.getApplication().isUnitTestMode()){
             return;
         }
+
     }
 }
 
