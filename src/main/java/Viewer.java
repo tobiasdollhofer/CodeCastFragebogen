@@ -13,41 +13,36 @@ import java.net.URL;
 
 public class Viewer {
 
-    private static String BROWSER_URL = "https://forms.gle/P8jMtnnQkfJSwcxM8";
-    private static String UUID_PREFILLED_URL = "https://docs.google.com/forms/d/e/1FAIpQLScMQo8qtIyEJlV3pQazn-TrXRdZkDKDxYKa0HzcNHKW8Oe4gg/viewform?usp=pp_url&entry.2064818074=" + UuidHelper.getInstance().getUuid();
+    private static String UUID_PREFILLED_TEST_URL = "https://docs.google.com/forms/d/e/1FAIpQLScMQo8qtIyEJlV3pQazn-TrXRdZkDKDxYKa0HzcNHKW8Oe4gg/viewform?usp=pp_url&entry.2064818074=" + UuidHelper.getInstance().getUuid();
+    private static String UUID_PREFILLED_QUESTIONAIRE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdPkV_exHIWgXkJ8vkYt73bryyf48coaDc2l-AKWg6G8AXVPg/viewform?usp=pp_url&entry.152260275=" + UuidHelper.getInstance().getUuid();
+
 
     private JPanel windowContent;
-    private JTextField headline;
-    private JTextPane description;
-    private JButton submitButton;
-    private JTextPane importantField;
+    private JTextPane title;
+    private JTextPane questionaireHeadline;
+    private JButton questionaireButton;
+    private JTextPane testHeadline;
+    private JTextPane testExplanation;
+    private JButton finishStudyButton;
+    private JTextPane questionaireExplanation;
     private JBCefBrowser browser;
 
     public Viewer() {
-        if(JBCefApp.isSupported()){
-            browser = new JBCefBrowser(UUID_PREFILLED_URL);
-            submitButton.addActionListener((e) -> {
-                windowContent.remove(headline);
-                windowContent.remove(description);
-                windowContent.remove(submitButton);
-                windowContent.remove(importantField);
-                windowContent.setLayout(new BoxLayout(windowContent, BoxLayout.Y_AXIS));
-
-                windowContent.add((JPanel) browser.getComponent());
+        questionaireButton.addActionListener((e)->{
+            try{
+                openWebpage(new URL(UUID_PREFILLED_QUESTIONAIRE_URL));
+            }catch (MalformedURLException ex){
+                ex.printStackTrace();
+            }
+        });
+        finishStudyButton.addActionListener((e) ->{
+            try{
+                openWebpage(new URL(UUID_PREFILLED_TEST_URL));
                 CsvLogger.sendToServer();
-            });
-        }else{
-            submitButton.addActionListener((e) -> {
-                try{
-                    openWebpage(new URL(UUID_PREFILLED_URL));
-                    CsvLogger.sendToServer();
-                }catch (MalformedURLException ex){
-                    ex.printStackTrace();
-                }
-
-            });
-        }
-
+            }catch (MalformedURLException ex){
+                ex.printStackTrace();
+            }
+        });
     }
 
     public static boolean openWebpage(URI uri) {
