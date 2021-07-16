@@ -38,7 +38,11 @@ public class FileEventListener {
             @Override
             public void selectionChanged(@NotNull FileEditorManagerEvent event) {
                 FileEditorManagerListener.super.selectionChanged(event);
-                CsvLogger.log(Context.EDITOR, EventType.FILE_FOCUSES, event.getNewFile().getName());
+                VirtualFile newFile = event.getNewFile();
+                if(newFile != null){
+                    CsvLogger.log(Context.EDITOR, EventType.FILE_FOCUSES,newFile.getName());
+                }
+                CsvLogger.log(Context.EDITOR, EventType.FILE_FOCUSES, "No Focused File!");
             }
         });
 
