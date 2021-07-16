@@ -3,7 +3,9 @@ import com.intellij.ide.plugins.PluginManager;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
+import log.Context;
 import log.CsvLogger;
+import log.EventType;
 import uuid.UuidHelper;
 
 import javax.swing.*;
@@ -35,6 +37,7 @@ public class Viewer {
             finishStudyButton.addActionListener((e) ->{
                 try{
                     openWebpage(new URL(UUID_PREFILLED_TEST_URL_CODECAST));
+                    CsvLogger.log(Context.EDITOR, EventType.TEST_CLICKED, "");
                     CsvLogger.sendToServer();
                 }catch (MalformedURLException ex){
                     ex.printStackTrace();
@@ -44,6 +47,7 @@ public class Viewer {
             finishStudyButton.addActionListener((e) ->{
                 try{
                     openWebpage(new URL(UUID_PREFILLED_TEST_URL));
+                    CsvLogger.log(Context.EDITOR, EventType.TEST_CLICKED, "");
                     CsvLogger.sendToServer();
                 }catch (MalformedURLException ex){
                     ex.printStackTrace();
@@ -54,6 +58,7 @@ public class Viewer {
         questionaireButton.addActionListener((e)->{
             try{
                 openWebpage(new URL(UUID_PREFILLED_QUESTIONAIRE_URL));
+                CsvLogger.log(Context.EDITOR, EventType.QUESTIONAIRE_CLICKED, "");
             }catch (MalformedURLException ex){
                 ex.printStackTrace();
             }
