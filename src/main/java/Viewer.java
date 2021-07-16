@@ -1,4 +1,6 @@
 
+import com.intellij.ide.plugins.PluginManager;
+import com.intellij.openapi.extensions.PluginId;
 import com.intellij.ui.jcef.JBCefApp;
 import com.intellij.ui.jcef.JBCefBrowser;
 import log.CsvLogger;
@@ -15,6 +17,7 @@ public class Viewer {
 
     private static String UUID_PREFILLED_TEST_URL = "https://docs.google.com/forms/d/e/1FAIpQLScMQo8qtIyEJlV3pQazn-TrXRdZkDKDxYKa0HzcNHKW8Oe4gg/viewform?usp=pp_url&entry.2064818074=" + UuidHelper.getInstance().getUuid();
     private static String UUID_PREFILLED_QUESTIONAIRE_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdPkV_exHIWgXkJ8vkYt73bryyf48coaDc2l-AKWg6G8AXVPg/viewform?usp=pp_url&entry.152260275=" + UuidHelper.getInstance().getUuid();
+    private static String UUID_PREFILLED_TEST_URL_CODECAST = "https://docs.google.com/forms/d/e/1FAIpQLSebZuywaXdlaP4wTjBHvPQoPv8QwykDeWfbGi__BoZWPhTHOQ/viewform?usp=pp_url&entry.1153713854=" + UuidHelper.getInstance().getUuid();
 
 
     private JPanel windowContent;
@@ -28,6 +31,26 @@ public class Viewer {
     private JBCefBrowser browser;
 
     public Viewer() {
+        if(PluginManager.isPluginInstalled(PluginId.getId("de.tobiasdollhofer.CodeCast"))){
+            finishStudyButton.addActionListener((e) ->{
+                try{
+                    openWebpage(new URL(UUID_PREFILLED_TEST_URL_CODECAST));
+                    CsvLogger.sendToServer();
+                }catch (MalformedURLException ex){
+                    ex.printStackTrace();
+                }
+            });
+        }else{
+            finishStudyButton.addActionListener((e) ->{
+                try{
+                    openWebpage(new URL(UUID_PREFILLED_TEST_URL));
+                    CsvLogger.sendToServer();
+                }catch (MalformedURLException ex){
+                    ex.printStackTrace();
+                }
+            });
+        }
+
         questionaireButton.addActionListener((e)->{
             try{
                 openWebpage(new URL(UUID_PREFILLED_QUESTIONAIRE_URL));
@@ -35,14 +58,7 @@ public class Viewer {
                 ex.printStackTrace();
             }
         });
-        finishStudyButton.addActionListener((e) ->{
-            try{
-                openWebpage(new URL(UUID_PREFILLED_TEST_URL));
-                CsvLogger.sendToServer();
-            }catch (MalformedURLException ex){
-                ex.printStackTrace();
-            }
-        });
+
     }
 
     public static boolean openWebpage(URI uri) {
