@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'de.tobiasdollhofer'
-version '0.3'
+version '0.4'
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      fixed bug where javafx forced app crash on mac and linux"""
+      fixed some bugs"""
 }
 test {
     useJUnitPlatform()
