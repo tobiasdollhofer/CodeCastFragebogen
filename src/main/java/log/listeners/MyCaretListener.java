@@ -8,6 +8,9 @@ import log.CsvLogger;
 import log.EventType;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * provides logging for changing of caret position
+ */
 public class MyCaretListener implements CaretListener {
 
     @Override

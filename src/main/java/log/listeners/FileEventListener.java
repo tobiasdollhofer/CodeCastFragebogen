@@ -9,7 +9,10 @@ import log.CsvLogger;
 import log.EventType;
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * provides logging events for opening closing and changing of selected files
+ * registered in plugin.xml
+ */
 public class FileEventListener {
 
     private Project project;

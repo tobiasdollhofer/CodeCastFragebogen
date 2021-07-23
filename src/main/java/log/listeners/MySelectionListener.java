@@ -7,6 +7,9 @@ import log.CsvLogger;
 import log.EventType;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * provides logging for changing of selected code/text
+ */
 public class MySelectionListener implements SelectionListener {
 
     @Override

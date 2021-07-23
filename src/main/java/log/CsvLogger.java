@@ -1,9 +1,8 @@
 package log;
 
 import com.opencsv.CSVWriter;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPSClient;
+import util.Config;
 import uuid.UuidHelper;
 
 import java.io.*;
@@ -13,23 +12,13 @@ import java.util.Date;
 
 public class CsvLogger {
 
-    private static String EDITOR_CSV_FILENAME = UuidHelper.getInstance().getUuid().toString() + "_editor.csv";
-    private static String EDITOR_CSV_PATH = System.getProperty("user.home") + "/" + "codecast" + "/" + EDITOR_CSV_FILENAME;
-
-    private static String PLAYER_CSV_FILENAME = UuidHelper.getInstance().getUuid().toString() + "_player.csv";
-    private static String PLAYER_CSV_PATH = System.getProperty("user.home") + "/" + "codecast" + "/" + PLAYER_CSV_FILENAME;
-
-    private static String HOST = "tobiasdollhofer.de";
-    private static String CODECAST_USER = "codecast";
-    private static String CODECAST_ACCESS = "C0d3C4$t";
-
     /**
      * stores message with timestamp and uuid to csv
      * @param message
      */
     public static void log(Context context, EventType type, String message){
         try{
-            File csv = new File(EDITOR_CSV_PATH);
+            File csv = new File(Config.EDITOR_CSV_PATH);
             FileWriter fileWriter = new FileWriter(csv, true);
 
             String uuid = UuidHelper.getInstance().getUuid().toString();
@@ -59,26 +48,28 @@ public class CsvLogger {
     }
 
     /**
-     * method sends final csv to ftp server
+     * method sends final log csvs to ftp server configured in config.properties
      */
     public static void sendToServer(){
         FTPSClient client = new FTPSClient();
         BufferedInputStream bufferedInputStream = null;
         try{
-            client.connect(HOST);
-            client.login(CODECAST_USER, CODECAST_ACCESS);
+            client.connect(Config.LOG_HOST);
+            client.login(Config.LOG_USER, Config.LOG_PW);
             client.enterLocalPassiveMode();
 
-            File editorCsv = new File(EDITOR_CSV_PATH);
+            // send log of this plugin to server
+            File editorCsv = new File(Config.EDITOR_CSV_PATH);
             if(editorCsv.exists()){
-                bufferedInputStream = new BufferedInputStream(new FileInputStream(EDITOR_CSV_PATH));
-                client.storeFile(EDITOR_CSV_FILENAME, bufferedInputStream);
+                bufferedInputStream = new BufferedInputStream(new FileInputStream(Config.EDITOR_CSV_PATH));
+                client.storeFile(Config.EDITOR_CSV_FILENAME, bufferedInputStream);
             }
 
-            File playerCsv = new File(PLAYER_CSV_PATH);
+            // send log of player if exists
+            File playerCsv = new File(Config.PLAYER_CSV_PATH);
             if(playerCsv.exists()){
-                bufferedInputStream = new BufferedInputStream(new FileInputStream(PLAYER_CSV_PATH));
-                client.storeFile(PLAYER_CSV_FILENAME, bufferedInputStream);
+                bufferedInputStream = new BufferedInputStream(new FileInputStream(Config.PLAYER_CSV_PATH));
+                client.storeFile(Config.PLAYER_CSV_FILENAME, bufferedInputStream);
             }
 
         }catch (IOException e){
@@ -97,7 +88,9 @@ public class CsvLogger {
         }
     }
 
-
+    /**
+     * prints startup message to log file including new session id
+     */
     public static void logStartup(){
         log(Context.EDITOR, EventType.STARTUP, "New EDITOR-SESSION-ID: " + UuidHelper.getInstance().getSessionId());
     }
